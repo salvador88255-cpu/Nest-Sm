@@ -18,7 +18,7 @@ export class CarsController {
     }
 
     @Get(':id')
-    getCarById(@Param('id', new ParseUUIDPipe({version: '5'})) id: string) {
+    getCarById(@Param('id', new ParseUUIDPipe()) id: string) {
         console.log({ id })
         // valores.map()
         // throw new Error('auxilio')
@@ -27,7 +27,7 @@ export class CarsController {
     }
 
     @Post()
-    @UsePipes(ValidationPipe)
+    // @UsePipes(ValidationPipe)
     createCar(@Body() createCardDto: CreateCarDto) {
         return createCardDto
     }
