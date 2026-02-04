@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Patc
 import { get } from 'http';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
+import { UpdateCarDto } from './dto/update-car.dto';
 
 @Controller('cars')
 export class CarsController {
@@ -18,7 +19,7 @@ export class CarsController {
     }
 
     @Get(':id')
-    getCarById(@Param('id', new ParseUUIDPipe({version: '5'})) id: string) {
+    getCarById(@Param('id', new ParseUUIDPipe({version: '4'})) id: string) {
         console.log({ id })
         // valores.map()
         // throw new Error('auxilio')
@@ -29,14 +30,14 @@ export class CarsController {
     @Post()
     @UsePipes(ValidationPipe)
     createCar(@Body() createCardDto: CreateCarDto) {
-        return createCardDto
+        return this.carsSerice.create(createCardDto)
     }
     @Patch(':id')
     updateCar(
-        @Param('id', ParseIntPipe) id: number,
-        @Body() body: any) 
+        @Param('id', ParseUUIDPipe) id: string,
+        @Body() updateCarDto: UpdateCarDto) 
         {
-        return body
+        return updateCarDto
     }
 
     @Delete(':id')
